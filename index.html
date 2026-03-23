@@ -86,11 +86,11 @@ button:hover{background:#45a049;transform:translateY(-2px);box-shadow:0 6px 15px
 <option value="تخصص3">تخصص 3</option>
 </select>
 
-<label for="photo">صورة شمسية:</label>
-<input type="file" id="photo" name="photo" accept="image/*" required>
+<label for="photo">رابط الصورة الشخصية:</label>
+<input type="url" id="photo" name="photo" placeholder="ضع رابط الصورة هنا" required>
 
-<label for="certificate">صورة الشهادة المدرسية:</label>
-<input type="file" id="certificate" name="certificate" accept="image/*" required>
+<label for="certificate">رابط الشهادة المدرسية:</label>
+<input type="url" id="certificate" name="certificate" placeholder="ضع رابط الشهادة هنا" required>
 
 <button type="submit">إرسال</button>
 </form>
@@ -107,39 +107,23 @@ window.addEventListener("load",function(){ setTimeout(()=>{ document.body.classL
 
 document.addEventListener("click",function(event){ const sidebar=document.getElementById("mySidebar"); const hamburger=document.querySelector(".hamburger"); if(!sidebar.contains(event.target)&&!hamburger.contains(event.target)){ if(sidebar.classList.contains("open")) sidebar.classList.remove("open"); } });
 
-// إرسال الفورم مع الصور
+// إرسال الفورم مباشرة
 document.getElementById("contact-form").addEventListener("submit", function(e){
 e.preventDefault();
 
-const formData = new FormData();
-formData.append('name', document.getElementById("name").value);
-formData.append('lastname', document.getElementById("lastname").value);
-formData.append('specialty', document.getElementById("specialty").value);
-formData.append('photo', document.getElementById("photo").files[0]);
-formData.append('certificate', document.getElementById("certificate").files[0]);
-
-// تحويل الملفات إلى Base64 لإرسالها عبر EmailJS
-const reader1 = new FileReader();
-const reader2 = new FileReader();
-
-reader1.onload = function() {
-reader2.onload = function() {
 const data = {
 name: document.getElementById("name").value,
 lastname: document.getElementById("lastname").value,
 specialty: document.getElementById("specialty").value,
-photo: reader1.result,
-certificate: reader2.result
+photo: document.getElementById("photo").value,
+certificate: document.getElementById("certificate").value
 };
 
 emailjs.send("dfsdferfsef-efsf","template_8mm4hjv",data)
 .then(function(){ alert("تم الإرسال بنجاح 🔥"); document.getElementById("contact-form").reset(); },
 function(error){ alert("فشل الإرسال ❌"); console.log(error); });
-};
-reader2.readAsDataURL(document.getElementById("certificate").files[0]);
-};
-reader1.readAsDataURL(document.getElementById("photo").files[0]);
 });
 </script>
+
 </body>
 </html>
